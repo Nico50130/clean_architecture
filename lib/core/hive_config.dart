@@ -1,11 +1,23 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveConfig {
-  static Future<void> init() async {
-    // Initialise Hive pour Flutter (gère automatiquement le dossier de stockage)
-    await Hive.initFlutter();
+  /// Nom de la box pour les données CPA Statement
+  static const boxName = 'cpaStatementBox';
 
-    // Ouvre une box nommée "exampleBox" (créée si elle n'existe pas)
-    await Hive.openBox<String>('cpaStatementBox');
+  /// Initialisation de Hive et ouverture de la box principale.
+  static Future<void> init() async {
+    try {
+      await Hive.initFlutter();
+
+      // Évite d’ouvrir deux fois la même box
+      if (!Hive.isBoxOpen(boxName)) {
+        await Hive.openBox<String>(boxName);
+      }
+    } catch (e, st) {
+      // En prod, tu peux loguer l'erreur via un logger
+      //logger.e('Erreur Hive init', e, st);
+      rethrow;
+    }
   }
 }
+

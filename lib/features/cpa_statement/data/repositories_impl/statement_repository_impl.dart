@@ -3,6 +3,7 @@ import '../datasources/statement_local_data_source.dart';
 
 class StatementRepositoryImpl implements StatementRepository {
   final StatementLocalDataSource localDataSource;
+
   StatementRepositoryImpl(this.localDataSource);
 
   @override
@@ -11,5 +12,8 @@ class StatementRepositoryImpl implements StatementRepository {
   }
 
   @override
-  String? getValue() => localDataSource.getValue();
+  Future<String?> getValue() async {
+    return await localDataSource.getValue();
+  }
 }
+
