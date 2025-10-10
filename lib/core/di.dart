@@ -10,7 +10,7 @@ final getIt = GetIt.instance;
 
 /// Initialise Hive + toutes les dépendances du projet
 Future<void> initDI() async {
-  await HiveConfig.init();
+  await HiveConfig.initHive();
 
   // Data sources
   getIt.registerLazySingleton(() => StatementLocalDataSource());

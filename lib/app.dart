@@ -1,6 +1,8 @@
 import 'package:clean_architecture/features/cpa_statement/domain/usecases/save_statement.dart';
 import 'package:flutter/material.dart';
 
+import 'features/cpa_statement/presentation/pages/my_home_page.dart';
+
 class MyApp extends StatelessWidget {
 
   final SaveStatement saveStatement;
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.blue),
         initialRoute: '/',
         routes: {
-
+          '/': (context) => MyHomePage(saveStatement: saveStatement),
         },
     );
   }

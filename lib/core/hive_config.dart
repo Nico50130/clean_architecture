@@ -1,23 +1,19 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:clean_architecture/features/cpa_statement/data/models/statement_model.dart';
 
 class HiveConfig {
-  /// Nom de la box pour les données CPA Statement
-  static const boxName = 'cpaStatementBox';
+  static const statementBox = 'statement_box';
 
-  /// Initialisation de Hive et ouverture de la box principale.
-  static Future<void> init() async {
-    try {
-      await Hive.initFlutter();
+  static Future<void> initHive() async {
+    await Hive.initFlutter();
 
-      // Évite d’ouvrir deux fois la même box
-      if (!Hive.isBoxOpen(boxName)) {
-        await Hive.openBox<String>(boxName);
-      }
-    } catch (e, st) {
-      // En prod, tu peux loguer l'erreur via un logger
-      //logger.e('Erreur Hive init', e, st);
-      rethrow;
+    // 🔹 Enregistre l’adapter avant d’ouvrir la box
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(StatementModelAdapter());
     }
+
+    await Hive.openBox<StatementModel>(statementBox);
   }
 }
+
 
